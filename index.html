@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>F1 TELEMETRY PRO | Scuderia Ferrari HP Inspired</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="bg-[#0a0a0a] text-zinc-100 font-['Titillium_Web'] overflow-hidden selection:bg-red-600/30">
+
+    <header class="h-14 border-b border-white/10 bg-black flex items-center justify-between px-6 z-50 relative">
+        <div class="flex items-center gap-6">
+            <div class="flex items-center gap-2">
+                <div class="bg-[#EF1A2D] w-8 h-8 flex items-center justify-center font-black italic text-white text-lg">F</div>
+                <div class="font-black italic tracking-tighter text-xl">TELEMETRY <span class="text-red-600">PRO</span></div>
+            </div>
+            <div id="session-info" class="flex items-center gap-3 border-l border-white/20 pl-6">
+                <span id="session-name" class="text-xs font-bold uppercase tracking-widest text-zinc-400">CONNECTING...</span>
+                <span id="track-name" class="text-xs bg-zinc-800 px-2 py-0.5 rounded text-zinc-300">--</span>
+            </div>
+        </div>
+
+        <div class="flex items-center gap-4 bg-zinc-900/80 px-4 py-1.5 rounded-full border border-white/10 shadow-2xl">
+            <button id="mode-toggle" class="text-[10px] font-black px-3 py-1 rounded bg-red-600 animate-pulse">LIVE</button>
+            <div class="flex flex-col w-48">
+                <span id="current-timestamp" class="font-mono text-[10px] text-zinc-400 tracking-tighter">00:00:00.000</span>
+            </div>
+        </div>
+
+        <div id="sys-status" class="flex items-center gap-2 text-[10px] font-bold text-green-500 uppercase tracking-widest">
+            <span class="relative flex h-2 w-2"><span class="animate-ping absolute h-full w-full rounded-full bg-green-400 opacity-75"></span><span class="relative rounded-full h-2 w-2 bg-green-500"></span></span>
+            Link Established
+        </div>
+    </header>
+
+    <main class="flex h-[calc(100vh-3.5rem)]">
+        <aside class="w-80 border-r border-white/10 bg-[#0d0d0d] flex flex-col">
+            <div class="p-3 bg-zinc-900/40 border-b border-white/5 flex items-center justify-between">
+                <span class="text-[10px] font-black uppercase tracking-widest text-zinc-500">Classification</span>
+            </div>
+            <div class="flex-1 overflow-y-auto custom-scrollbar" id="tower-list"></div>
+        </aside>
+
+        <section class="flex-1 relative bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-[#1a1a1a] via-[#0d0d0d] to-black overflow-hidden">
+            <div id="map-viewport" class="w-full h-full p-12">
+                <svg id="track-canvas" class="w-full h-full drop-shadow-[0_0_30px_rgba(239,26,45,0.1)]">
+                    <path id="track-outline" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="35" stroke-linejoin="round" />
+                    <path id="track-line" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="2" stroke-dasharray="10 10" />
+                    <g id="driver-layer"></g>
+                </svg>
+            </div>
+
+            <div class="absolute bottom-6 left-6 flex flex-col gap-3 max-w-md pointer-events-none">
+                <div id="race-control-msg" class="bg-black/90 border-l-[6px] border-yellow-500 p-4 shadow-2xl backdrop-blur-xl">
+                    <div class="text-[10px] font-black uppercase text-yellow-500 mb-1">Race Control Message</div>
+                    <div id="msg-content" class="text-sm font-bold italic">STANDBY FOR DATA...</div>
+                </div>
+            </div>
+        </section>
+
+        <aside class="w-80 border-l border-white/10 bg-[#0d0d0d] hidden flex flex-col" id="driver-panel">
+            <div class="p-6 border-b border-white/10 relative">
+                <div id="driver-number" class="text-6xl font-black italic text-white/5 absolute right-2 top-2">--</div>
+                <div id="driver-full-name" class="text-xl font-black uppercase italic leading-none">--</div>
+                <div id="driver-team-name" class="text-[10px] text-zinc-400 font-bold uppercase mt-1">--</div>
+            </div>
+            <div class="flex-1 overflow-y-auto p-4 space-y-4" id="driver-stats">
+                <div class="bg-zinc-900/50 p-3 border border-white/5">
+                    <div class="text-[9px] text-zinc-500 font-bold uppercase">Gap to Leader</div>
+                    <div id="driver-gap-leader" class="text-lg font-mono font-bold">--</div>
+                </div>
+            </div>
+            <button onclick="window.closePanel()" class="p-4 text-[10px] font-black text-zinc-500 border-t border-white/5">CLOSE DETAIL</button>
+        </aside>
+    </main>
+
+    <script type="module" src="app.js"></script>
+    <script>setTimeout(() => lucide.createIcons(), 500);</script>
+</body>
+</html>
